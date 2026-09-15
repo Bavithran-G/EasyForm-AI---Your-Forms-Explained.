@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #F0FAF6;
+    --foreground: #2E2E2E;
+    --surface: #FFFFFF;
+    --surface-secondary: #CEF1E4;
+    --card: #FFFFFF;
+    --card-foreground: #2E2E2E;
+    --border: #CEF1E4;
+    --muted: #CCF0E6;
+    --muted-foreground: #6B706D;
+    --primary: #2EB688;
+    --primary-foreground: #FFFFFF;
+    --accent: #2EB688;
+    --accent-subtle: rgba(46, 182, 136, 0.12);
+    --cool-gray: #ACAFAB;
+    --green-glow: rgba(46, 182, 136, 0.35);
+  }
+
+  .dark {
+    --background: #111214;
+    --foreground: #FFFFFF;
+    --surface: #2E2E2E;
+    --surface-secondary: #1E2220;
+    --card: #1E2220;
+    --card-foreground: #FFFFFF;
+    --border: rgba(206, 241, 228, 0.12);
+    --muted: #242926;
+    --muted-foreground: #ACAFAB;
+    --primary: #2EB688;
+    --primary-foreground: #FFFFFF;
+    --accent: #2EB688;
+    --accent-subtle: rgba(46, 182, 136, 0.10);
+    --cool-gray: #ACAFAB;
+    --green-glow: rgba(46, 182, 136, 0.45);
+  }
+
+  html, body {
+    overflow-x: hidden !important;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    transition: background-color 300ms ease, color 300ms ease;
+  }
+
+  html.dark, html.dark body {
+    background-color: #111214;
+    color: #FFFFFF;
+  }
+
+  html:not(.dark), html:not(.dark) body {
+    background-color: #F0FAF6;
+    color: #2E2E2E;
+  }
+}
+
+/* Custom Paper Texture styling for realism (NOT inverted in dark mode) */
+.paper-texture {
+  background-color: #F8F3EB;
+  background-image: 
+    radial-gradient(rgba(120, 95, 70, 0.07) 1px, transparent 0),
+    linear-gradient(to right, rgba(90, 69, 51, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(90, 69, 51, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px, 20px 20px, 20px 20px;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(90, 69, 51, 0.15),
+    inset 0 0 80px rgba(180, 150, 115, 0.15);
+}
+
+.paper-stamp {
+  border: 2px dashed #8B251A;
+  color: #8B251A;
+  font-family: 'Space Grotesk', monospace;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  opacity: 0.85;
+}
+
+.paper-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 900;
+  font-size: 6rem;
+  color: rgba(90, 69, 51, 0.04);
+  pointer-events: none;
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* Document field hover & active state - mapped to PRIMARY GREEN */
+.doc-field-highlight {
+  position: absolute;
+  border-radius: 4px;
+  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.doc-field-highlight:hover {
+  background-color: rgba(46, 182, 136, 0.18);
+  box-shadow: 0 0 0 1.5px rgba(46, 182, 136, 0.6);
+}
+
+.doc-field-active {
+  background-color: rgba(46, 182, 136, 0.22) !important;
+  box-shadow: 0 0 0 2px #2EB688, 0 4px 20px rgba(46, 182, 136, 0.35) !important;
+}
+
+/* Pulsing corner anchors for selected field */
+.doc-field-active::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 7px;
+  height: 7px;
+  background-color: #2EB688;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #2EB688;
+  animation: pulseSlow 2s infinite ease-in-out;
+}
+
+/* Scanning beam effect - Green / Mint laser */
+.scan-laser {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, rgba(46, 182, 136, 0.25) 15%, #2EB688 50%, rgba(46, 182, 136, 0.25) 85%, transparent 100%);
+  box-shadow: 
+    0 0 15px 2px rgba(46, 182, 136, 0.8),
+    0 0 35px 6px rgba(46, 182, 136, 0.4);
+  filter: blur(0.5px);
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Custom sleek scrollbar for Light & Dark Themes */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #111214;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #2E2E2E;
+  border-radius: 3px;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #3D413E;
+}
+
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #F0FAF6;
+}
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #CEF1E4;
+  border-radius: 3px;
+}
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #ACAFAB;
+}
+
+/* Accessibility: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

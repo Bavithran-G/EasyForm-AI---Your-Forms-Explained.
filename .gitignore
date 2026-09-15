@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Secrets — NEVER commit these
+.env
+*.env
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log
+.pnp
+.pnp.js
+
+# Vite build output (frontend dev only — NOT the pre-built frontend/ in backend)
+frontend/easyform/dist/
+
+# Temporary upload dirs created by the app
+easyform_*/
+tmp/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log

@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: easyform-ai
+    runtime: python
+    rootDir: backend/easyform-ai
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: llama-3.3-70b-versatile
+      - key: EASYFORM_CORS_ORIGINS
+        value: "*"
+      - key: EASYFORM_MAX_MB
+        value: "25"
+      - key: LOG_LEVEL
+        value: INFO
