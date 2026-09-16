@@ -73,7 +73,7 @@ class Explainer:
         openai_key = os.getenv("OPENAI_API_KEY", "").strip()
         
         if groq_key:
-            self.model = model or os.getenv("OPENAI_MODEL", "llama3-70b-8192")
+            self.model = model or os.getenv("OPENAI_MODEL", "openai/gpt-oss-120b")
             try:
                 from openai import OpenAI
                 self.client = OpenAI(api_key=groq_key, base_url="https://api.groq.com/openai/v1")

@@ -9,7 +9,11 @@ services:
       - key: GROQ_API_KEY
         sync: false
       - key: OPENAI_MODEL
-        value: llama-3.3-70b-versatile
+        value: openai/gpt-oss-120b
+      - key: EASYFORM_DISABLE_ST
+        value: "1"
+      - key: EASYFORM_DISABLE_RERANK
+        value: "1"
       - key: EASYFORM_CORS_ORIGINS
         value: "*"
       - key: EASYFORM_MAX_MB

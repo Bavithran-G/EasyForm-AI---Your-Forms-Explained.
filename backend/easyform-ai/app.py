@@ -35,15 +35,27 @@ MAX_MB = int(os.getenv("EASYFORM_MAX_MB", "25"))
 
 
 def _save(upload: UploadFile) -> str:
-    if not upload.filename or not upload.filename.lower().endswith(".pdf"):
-        raise HTTPException(400, f"'{upload.filename}' is not a PDF.")
+    if not upload.filename:
+        raise HTTPException(400, "Missing file upload.")
+    fn = upload.filename.lower()
+    allowed = (".pdf", ".png", ".jpg", ".jpeg", ".webp")
+    if not any(fn.endswith(ext) for ext in allowed):
+        raise HTTPException(400, f"'{upload.filename}' is not a supported file (PDF, PNG, JPG, JPEG).")
     dest = UPLOAD_DIR / f"{uuid.uuid4().hex}.pdf"
-    with dest.open("wb") as f:
-        shutil.copyfileobj(upload.file, f)
-    if dest.stat().st_size == 0:
-        dest.unlink(); raise HTTPException(400, f"'{upload.filename}' is empty.")
-    if dest.stat().st_size > MAX_MB * 1024 * 1024:
-        dest.unlink(); raise HTTPException(400, f"'{upload.filename}' exceeds {MAX_MB} MB.")
+    content = upload.file.read()
+    if len(content) == 0:
+        raise HTTPException(400, f"'{upload.filename}' is empty.")
+    if len(content) > MAX_MB * 1024 * 1024:
+        raise HTTPException(400, f"'{upload.filename}' exceeds {MAX_MB} MB.")
+    if fn.endswith(".pdf"):
+        dest.write_bytes(content)
+    else:
+        ext = fn.split(".")[-1]
+        if ext == "jpg":
+            ext = "jpeg"
+        import pymupdf as fitz
+        imgdoc = fitz.open(stream=content, filetype=ext)
+        dest.write_bytes(imgdoc.convert_to_pdf())
     return str(dest)
 
 

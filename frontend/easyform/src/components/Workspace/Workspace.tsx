@@ -62,8 +62,11 @@ export const Workspace: React.FC<WorkspaceProps> = ({ onBackToLanding }) => {
       setLiveStatus(status); 
       setLiveDocument(statusToDocument(status)); 
       setApiDone(true);
-    }).catch((error: Error) => { 
-      setUploadError(error.message); 
+    }).catch((error: Error) => {
+      // Reset both flags so the scanning screen doesn't stay frozen
+      setApiDone(false);
+      setAnimDone(false);
+      setUploadError(error.message || 'Failed to reach the backend. Make sure the server is running on port 8000.');
       setWorkspaceState('select'); 
     });
   };
